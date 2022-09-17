@@ -1,0 +1,19 @@
+{
+	"id": "nb-phoneTool",
+	"displayName": "头像万能生成器",
+	"dependencies": {
+		"uni-read-pages": "^1.0.5",
+		"uni-simple-router": "^2.0.1"
+	},
+	"uni_modules": {
+		"dependencies": [],
+		"encrypt": [
+			"uniCloud-aliyun/cloudfunctions/categories/index.js",
+			"uniCloud-aliyun/cloudfunctions/images_sourse/index.js",
+			"uniCloud-aliyun/cloudfunctions/user_images/index.js"
+		],
+		"extends": {
+			"sn": "BBgSXcyIdPJ2F4EFkW/j0XeLAZ+pqdHM+4qAOEB47/+ORzGwcy8U4JEZo37+mJl9XeuBhZOwyh2vgNLE1UQXEIM+fT3wUE2xSLy3120+N7p00tDJkUyuGTRFXNAMdAfSKkD6AxmvhjeijWAPTOiRZe8EFpvJbzg/eZ1gGHMNKszpmkmb+HZtMuAfvOizsh9VUVnVub0G/kEB4Xdu+YM+uaNXVVduv5/ceQJkkUjQzpgKMTp1W5tmWIfe9Kk6fr9oZXlW4Y98PaaCAVfVNe16xEf+4gV8BPgBnKeKrGvs2yXwzJpFaGVVAlcMeXZCyv9k"
+		}
+	}
+}

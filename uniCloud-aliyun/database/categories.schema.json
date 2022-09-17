@@ -1,0 +1,68 @@
+{
+	"bsonType": "object",
+	"required": ["name"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（文章 ID），系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "名称",
+			"title": "名称",
+			"trim": "both"
+		},
+		"sort": {
+			"bsonType": "int",
+			"description": "排序，越大越靠后",
+			"title": "排序"
+		},
+		"state": {
+			"bsonType": "bool",
+			"title": "状态",
+			"description": "是否启用",
+			"defaultValue": true,
+			"enum": [{
+				"text": "启用",
+				"value": true
+			}, {
+				"text": "禁用",
+				"value": false
+			}]
+		},
+		"is_del": {
+			"bsonType": "bool",
+			"title": "是否删除",
+			"description": "是否删除",
+			"defaultValue": false,
+			"enum": [{
+				"text": "是",
+				"value": true
+			}, {
+				"text": "否",
+				"value": false
+			}]
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"title": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_date": {
+			"bsonType": "timestamp",
+			"title": "更新时间",
+			"description": "修改时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

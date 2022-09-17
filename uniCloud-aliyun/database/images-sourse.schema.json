@@ -1,0 +1,96 @@
+{
+	"bsonType": "object",
+	"required": ["image_url", "category_id"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（图片 ID），系统自动生成"
+		},
+		"category_id": {
+			"bsonType": "string",
+			"title": "分类",
+			"enum": {
+				"collection": "categories",
+				"field": "name as text,_id as value"
+			},
+			"foreignKey": "categories._id",
+			"componentForEdit": {
+				"name": "uni-data-picker",
+				"props": {
+					"multiple": false
+				}
+			}
+		},
+		"image_url": {
+			"bsonType": "string",
+			"description": "图片地址",
+			"title": "图片地址",
+			"pattern": "^(http:\/\/|https:\/\/|\/|.\/|@\/)\\S",
+			"trim": "both"
+		},
+		"month_sell_count": {
+			"bsonType": "int",
+			"title": "月下载次数",
+			"description": "月下载次数",
+			"defaultValue": 0
+		},
+		"total_sell_count": {
+			"bsonType": "int",
+			"title": "总下载次数",
+			"description": "总下载次数",
+			"defaultValue": 0
+		},
+		"state": {
+			"bsonType": "bool",
+			"description": "是否启用",
+			"title": "是否启用",
+			"defaultValue": true,
+			"enum": [{
+				"text": "启用",
+				"value": true
+			}, {
+				"text": "禁用",
+				"value": false
+			}]
+		},
+		"is_del": {
+			"bsonType": "bool",
+			"description": "是否删除",
+			"title": "是否删除",
+			"defaultValue": false,
+			"enum": [{
+				"text": "是",
+				"value": true
+			}, {
+				"text": "否",
+				"value": false
+			}]
+		},
+		"sort": {
+			"bsonType": "int",
+			"description": "排序，越大越靠后",
+			"title": "排序"
+		},
+		"add_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"title": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"last_modify_date": {
+			"bsonType": "timestamp",
+			"description": "最后修改时间",
+			"title": "最后修改时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

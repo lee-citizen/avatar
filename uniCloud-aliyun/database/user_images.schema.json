@@ -1,0 +1,47 @@
+{
+	"bsonType": "object",
+	"required": ["image_url", "category_id"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（图片 ID），系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"title": "用户id",
+			"enum": {
+				"collection": "users_mpweixin",
+				"field": "name as text,_id as value"
+			},
+			"foreignKey": "users_mpweixin._id"
+		},
+		"image_url": {
+			"bsonType": "string",
+			"description": "图片地址",
+			"title": "图片地址",
+			"pattern": "^(http:\/\/|https:\/\/|\/|.\/|@\/)\\S",
+			"trim": "both"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"title": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_date": {
+			"bsonType": "timestamp",
+			"description": "修改时间",
+			"title": "修改时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

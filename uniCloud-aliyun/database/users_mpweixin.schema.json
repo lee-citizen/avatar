@@ -1,0 +1,27 @@
+{
+	"bsonType": "object",
+	"required": ["open_id", "nickName", "image_url"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"open_id": {
+			"description": "唯一标识",
+			"bsonType": "string"
+		},
+		"nickName": {
+			"description": "昵称",
+			"bsonType": "string"
+		},
+		"create_date": {
+			"description": "创建时间",
+			"bsonType": "date"
+		}
+	}
+}
