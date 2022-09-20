@@ -54,8 +54,6 @@
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210131171524170.png#pic_center)
 
 2、打开HBuilderX，点击“运行-运行到小程序模拟器-运行配置”中设置你安装微信开发者工具的路径。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210131171947775.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMyMzQwODc3,size_16,color_FFFFFF,t_70#pic_center)
-
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210131171956811.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMyMzQwODc3,size_16,color_FFFFFF,t_70#pic_center)
 ## 四、发布小程序
 1、右键项目文件夹，点击“发行-小程序-微信（仅适用于uniapp）”
