@@ -39,7 +39,6 @@
 
 
 二、这里云空间叫`demo`,如果没有新建个阿里云空间即可（[创建 uniCloud 服务空间](https://uniapp.dcloud.io/uniCloud/quickstart?id=%e5%88%9b%e5%bb%ba%e5%92%8c%e7%bb%91%e5%ae%9a%e6%9c%8d%e5%8a%a1%e7%a9%ba%e9%97%b4)），右键uniCloud目录关联到与管理后台同一个服务空间，全部勾选，点击直接部署服务空间，导入HBuilderX 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/937a454e3b3d43d4b59ee2cdf6e29253.png?x-oss-process=,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiA5Liq5a2X5bCx5piv5bmy,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center)
 打开文件 `uniCloud => cloudfunctions => user_mpweixin => index.js`  
 配置 你自己的 appid 和 secret（在微信小程序官方的后台获取）
 
