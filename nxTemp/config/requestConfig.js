@@ -12,7 +12,8 @@ let $http = new request({
 	defaultUploadUrl: "api/common/v1/upload_image",
 	//设置请求头（如果使用报错跨域问题，可能是content-type请求类型和后台那边设置的不一致）
 	header: {
-		'Content-Type': 'application/json;charset=UTF-8',
+		// 'Content-Type': 'application/json;charset=UTF-8',
+		'Accept': 'application/json, text/plain, */*'
 		// 'project_token': config.projectToken, //项目token（可删除）
 	}
 });
@@ -60,14 +61,14 @@ $http.requestStart = function(options) {
 	if (options.url) {
 		//请求前加入token
 		let url = options.url.substring(options.url.lastIndexOf('/') + 1);
-		if (url != 'login') {
-			let token = uni.getStorageSync('token');
-			if (!token) {
-				store.dispatch('reLogin', '');
-			} else {
-				options.header['token'] = uni.getStorageSync('token');
-			}
-		}
+		// if (url != 'login') {
+		// 	let token = uni.getStorageSync('token');
+		// 	if (!token) {
+		// 		store.dispatch('reLogin', '');
+		// 	} else {
+		// 		options.header['token'] = uni.getStorageSync('token');
+		// 	}
+		// }
 	}
 
 
@@ -90,6 +91,7 @@ $http.dataFactory = async function(res) {
 		data: res.data,
 		method: res.method,
 	});
+	console.log(res);
 	if (res.response.statusCode && res.response.statusCode == 200) {
 		let httpData = res.response.data;
 		if (typeof(httpData) == "string") {
@@ -99,9 +101,9 @@ $http.dataFactory = async function(res) {
 
 		//判断数据是否请求成功
 		// if (httpData.success || httpData.code == 200) {
-		if (httpData.code == 0) {
+		if (httpData.status == 1) {
 			// 返回正确的结果(then接受数据)
-			return Promise.resolve(httpData.data);
+			return Promise.resolve(httpData.body);
 		} else if (httpData.code == "1000" || httpData.code == "1001" || httpData.code == 1100 || httpData.code == 402) {
 
 			// 失败重新请求（最多重新请求3次）

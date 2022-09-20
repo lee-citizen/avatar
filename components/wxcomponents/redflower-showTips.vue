@@ -26,7 +26,7 @@
 			tip:{
 				type:String,
 				default:"点击「添加小程序」，下次访问更便捷",
-				required:true				
+				required:false				
 			},
 			duration:{
 				type:Number,

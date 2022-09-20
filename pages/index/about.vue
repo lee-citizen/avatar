@@ -2,7 +2,7 @@
 	<view class="page">
 		<view class="infoTop flex items-center justify-center">
 			<view class="cu-avatar xl round ">
-				<image src="/static/images/logo.png" mode=""></image>
+				<image src="/static/images/logo.jpg" mode=""></image>
 			</view>
 		</view>
 		<view class="cu-list menu">
@@ -30,6 +30,16 @@
 						个人博客
 					</view>
 					<text class="text-sm">http://www.wdxdd.top</text>
+				</view>
+				<text class="action text-sm">复制</text>
+			</view>
+			
+			<view class="cu-item margin-top arrow" @click="copy('https://github.com/lee-citizen')">
+				<view class="content">
+					<view class="">
+						github
+					</view>
+					<text class="text-sm">https://github.com/lee-citizen</text>
 				</view>
 				<text class="action text-sm">复制</text>
 			</view>

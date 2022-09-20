@@ -17,7 +17,7 @@
 				<view class="image-div">
 					<view :class="{ 'image-margin': index !== 0 }" v-for="(info, index) in imageList" :key="info._id"
 						@click="imageClick(info)">
-						<image :src="info.image_url"></image>
+						<image v-if="info.image" :src="fileUrl + info.image.url"></image>
 					</view>
 				</view>
 			</scroll-view>
@@ -31,8 +31,8 @@
 						<image class="empty" src="/static/images/empty.svg">
 						</image>
 					</view>
-					<image class="avatar-default " :src="currentImage.image_url"
-						v-if="currentImage && currentImage.image_url"></image>
+					<image class="avatar-default " :src="fileUrl + currentImage.image.url"
+						v-if="currentImage.image && currentImage.image.url"></image>
 				</view>
 
 				<view class="ctlbtn">
@@ -46,8 +46,6 @@
 		<view style="margin: 20px;">
 			<ad unit-id="adunit-1b3406fe9b8e676a" ad-type="video" ad-theme="white"></ad>
 		</view>
-
-
 		<view class="hideCanvasView">
 			<canvas class="hideCanvas" id="default_PosterCanvasId" canvas-id="default_PosterCanvasId"
 				:style="{ width: (poster.width || 10) + 'px', height: (poster.height || 10) + 'px' }"></canvas>
@@ -56,8 +54,13 @@
 </template>
 
 <script>
+	import config from '@/nxTemp/config/index.config.js';
 	import redflowerShowTips from "@/components/wxcomponents/redflower-showTips.vue"
 	import _app from '@/nxTemp/utils/qr/app.js';
+	import {
+		classify,
+		avatar
+	} from '@/nxTemp/apis'
 	import {
 		getQr
 	} from '@/nxTemp/utils/qr/qr.js';
@@ -67,6 +70,7 @@
 		},
 		data() {
 			return {
+				fileUrl: config.fileUrl,
 				poster: {},
 				posterImage: '',
 				canvasId: 'default_PosterCanvasId',
@@ -89,7 +93,7 @@
 			this.getCategoriesList();
 			uni.setStorageSync('shareInfo', this.shareInfo);
 		},
-		
+
 		onShareAppMessage: function() {
 			return this.shareInfo;
 		},
@@ -105,21 +109,36 @@
 					title: '加载中',
 					mask: true
 				});
-				uniCloud
-					.callFunction({
-						name: 'categories',
-						data: {
-							type: 'mpweixin'
-						}
-					})
-					.then(res => {
-						this.categoriesList = res.result.data;
+				// uniCloud
+				// .callFunction({
+				// 	name: 'categories',
+				// 	data: {
+				// 		type: 'mpweixin'
+				// 	}
+				// })
+				// .then(res => {
+				// 	this.categoriesList = res.result.data;
+				// 	if (this.categoriesList.length > 0) {
+				// 		this.$set(this.categoriesList[0], 'selected', true);
+				// 		this.getImagesList(this.categoriesList[0]._id);
+				// 	}
+				// })
+				// .catch(err => {
+				// 	uni.showModal({
+				// 		content: err.message || '请求服务失败',
+				// 		showCancel: false
+				// 	});
+				// })
+				// .finally(() => {
+				// 	uni.hideLoading();
+				// });
+				classify().then(res => {
+						this.categoriesList = res.data;
 						if (this.categoriesList.length > 0) {
 							this.$set(this.categoriesList[0], 'selected', true);
 							this.getImagesList(this.categoriesList[0]._id);
 						}
-					})
-					.catch(err => {
+					}).catch(err => {
 						uni.showModal({
 							content: err.message || '请求服务失败',
 							showCancel: false
@@ -129,9 +148,9 @@
 						uni.hideLoading();
 					});
 			},
-			toAbout(){
+			toAbout() {
 				uni.navigateTo({
-					url:'/pages/index/about'
+					url: '/pages/index/about'
 				})
 			},
 			/**
@@ -143,16 +162,12 @@
 					title: '加载中',
 					mask: true
 				});
-				uniCloud
-					.callFunction({
-						name: 'images_sourse',
-						data: {
-							type: 'mpweixin',
-							categoryId: id
-						}
-					})
-					.then(res => {
-						this.imageList = res.result.data;
+				avatar({
+						page: 1,
+						count: 100,
+						classify_id: id
+					}).then(res => {
+						this.imageList = res.data;
 						if (this.imageList && this.imageList.length > 0) {
 							if (num < 0) {
 								this.currentImage = this.imageList[this.imageList.length - 1];
@@ -248,7 +263,7 @@
 							return new Promise((rs, rj) => {
 								rs([{
 									type: 'image',
-									url: this.currentImage.image_url,
+									url: this.fileUrl + this.currentImage.image.url,
 									dx: 0,
 									dy: 0,
 									infoCallBack(imageInfo) {
@@ -340,20 +355,21 @@
 			 * 头像
 			 */
 			saveImageInfo() {
-				uniCloud
-					.callFunction({
-						name: 'images_sourse',
-						data: {
-							imageInfo: this.currentImage,
-							type: 'imageUsed'
-						}
-					})
-					.then(res => {
-						uni.hideLoading();
-						uni.navigateTo({
-							url: '/pages/index/save-success'
-						});
-					});
+				uni.hideLoading();
+				uni.navigateTo({
+					url: '/pages/index/save-success'
+				});
+				// uniCloud
+				// 	.callFunction({
+				// 		name: 'images_sourse',
+				// 		data: {
+				// 			imageInfo: this.currentImage,
+				// 			type: 'imageUsed'
+				// 		}
+				// 	})
+				// 	.then(res => {
+
+				// 	});
 			},
 			/**
 			 * @param {Object} type
@@ -394,37 +410,45 @@
 						mask: true
 					});
 				}
-				uniCloud
-					.callFunction({
-						name: 'user_mpweixin',
-						data: {
-							code: that.code,
-							avatarImage: that.avatarImage,
-							nickName,
-							type
-						}
-					})
-					.then(res => {
-						uni.setStorageSync('user_info', res.result);
-						this.userInfo = res.result;
-						if (type === 'userLogin') {
-							uni.hideLoading();
-						}
-					});
+				uni.setStorageSync('user_info', res.result);
+				this.userInfo = res.result;
+				if (type === 'userLogin') {
+					uni.hideLoading();
+				}
+
+				// uniCloud
+				// 	.callFunction({
+				// 		name: 'user_mpweixin',
+				// 		data: {
+				// 			code: that.code,
+				// 			avatarImage: that.avatarImage,
+				// 			nickName,
+				// 			type
+				// 		}
+				// 	})
+				// 	.then(res => {
+				// 		uni.setStorageSync('user_info', res.result);
+				// 		this.userInfo = res.result;
+				// 		if (type === 'userLogin') {
+				// 			uni.hideLoading();
+				// 		}
+				// 	});
 			},
 		}
 	};
 </script>
 
 <style lang="scss" scoped>
-	page{
+	page {
 		height: 100%;
 	}
+
 	.content {
 		background-size: 100% 100%;
 		padding-top: 300rpx;
 		height: 100%;
-		.editor_bg{
+
+		.editor_bg {
 			position: fixed;
 			top: 0;
 			left: 0;
@@ -434,9 +458,10 @@
 			width: 750rpx;
 			background: url(/static/images/editor_bg.png);
 			background-repeat: no-repeat;
-			background-position: 0 -60px ;
+			background-position: 0 -60px;
 			background-size: cover;
 		}
+
 		.all-back {
 			width: 100%;
 			height: 100%;
@@ -576,13 +601,15 @@
 	.btn-margin {
 		margin-bottom: 50rpx;
 	}
-	.btn-about{
+
+	.btn-about {
 		background: linear-gradient(97.71deg, #ffa462, #FF8245 88.36%);
 		border: 1rpx solid #ff7852;
 		border-radius: 48rpx;
 		box-shadow: 0 12rpx 16rpx -8rpx rgba(255, 88, 35, 0.6);
 		color: #fff;
 	}
+
 	.btn-primary {
 		background: linear-gradient(97.71deg, #ffa462, #ff4d42 88.36%);
 		border: 1rpx solid #ff7852;
