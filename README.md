@@ -13,6 +13,8 @@
 ![小程序预览地址](./demo.jpg)
 
 
+
+
 ## 2、准备工作
 
 一、申请一个小程序
@@ -75,6 +77,8 @@
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/4d2e28513f9c48dfbef64d78cf42c789.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA44CK5oqA5pyv6LWa5a6i5ZCn44CL,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center)
 
+## 沟通群
+ ![小程序预览地址](./code.jpg)
  
  ## 最后
  小程序可开通流量主，达到开通条件可以选择开通流量主 即可躺着赚钱 ，
